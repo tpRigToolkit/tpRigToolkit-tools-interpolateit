@@ -53,9 +53,6 @@ class InterpolatorWidget(base.BaseWidget, object):
 
         main_frame = base.BaseFrame(parent=self)
         main_frame.setFixedHeight(self.INTERP_HEIGHT)
-        frame_layout = layouts.VerticalLayout(spacing=0, margins=(1, 1, 1, 1))
-        main_frame.setLayout(frame_layout)
-        main_frame.setFrameStyle(QFrame.Panel | QFrame.Raised)
         self.main_layout.addWidget(main_frame)
 
         main_widget = QWidget()
@@ -70,7 +67,7 @@ class InterpolatorWidget(base.BaseWidget, object):
         graphics_view.setFocusPolicy(Qt.NoFocus)
         graphics_view.setStyleSheet('QGraphicsView {border-style: none;}')
         graphics_view.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-        frame_layout.addWidget(graphics_view)
+        main_frame.main_layout.addWidget(graphics_view)
         self._main_widget_proxy = graphics_scene.addWidget(main_widget)
         main_widget.setParent(graphics_view)
 
@@ -405,7 +402,7 @@ class InterpolatorWidgetController(object):
 
         return attrs
 
-    @tp.Dcc.get_undo_decorator()
+    @tp.Dcc.undo_decorator()
     def reset_attributes(self):
         if not self._model.items:
             return
