@@ -1,0 +1,7 @@
+tpRigToolkit.tools.interpolateit.dccs.maya.interpolateitserver module
+=====================================================================
+
+.. automodule:: tpRigToolkit.tools.interpolateit.dccs.maya.interpolateitserver
+   :members:
+   :undoc-members:
+   :show-inheritance:

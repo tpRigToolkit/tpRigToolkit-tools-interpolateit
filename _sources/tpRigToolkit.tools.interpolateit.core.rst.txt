@@ -1,0 +1,23 @@
+tpRigToolkit.tools.interpolateit.core package
+=============================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   tpRigToolkit.tools.interpolateit.core.consts
+   tpRigToolkit.tools.interpolateit.core.controller
+   tpRigToolkit.tools.interpolateit.core.interpolateit
+   tpRigToolkit.tools.interpolateit.core.interpolateitclient
+   tpRigToolkit.tools.interpolateit.core.model
+   tpRigToolkit.tools.interpolateit.core.view
+
+Module contents
+---------------
+
+.. automodule:: tpRigToolkit.tools.interpolateit.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

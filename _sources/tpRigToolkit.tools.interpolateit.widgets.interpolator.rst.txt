@@ -1,0 +1,7 @@
+tpRigToolkit.tools.interpolateit.widgets.interpolator module
+============================================================
+
+.. automodule:: tpRigToolkit.tools.interpolateit.widgets.interpolator
+   :members:
+   :undoc-members:
+   :show-inheritance:

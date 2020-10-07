@@ -1,0 +1,19 @@
+tpRigToolkit.tools.interpolateit.dccs package
+=============================================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   tpRigToolkit.tools.interpolateit.dccs.max
+   tpRigToolkit.tools.interpolateit.dccs.maya
+
+Module contents
+---------------
+
+.. automodule:: tpRigToolkit.tools.interpolateit.dccs
+   :members:
+   :undoc-members:
+   :show-inheritance:

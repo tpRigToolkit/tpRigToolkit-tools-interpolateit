@@ -1,0 +1,20 @@
+tpRigToolkit.tools.interpolateit package
+========================================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   tpRigToolkit.tools.interpolateit.core
+   tpRigToolkit.tools.interpolateit.dccs
+   tpRigToolkit.tools.interpolateit.widgets
+
+Module contents
+---------------
+
+.. automodule:: tpRigToolkit.tools.interpolateit
+   :members:
+   :undoc-members:
+   :show-inheritance:

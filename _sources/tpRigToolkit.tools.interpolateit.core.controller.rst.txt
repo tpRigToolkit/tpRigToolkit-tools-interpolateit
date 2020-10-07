@@ -1,0 +1,7 @@
+tpRigToolkit.tools.interpolateit.core.controller module
+=======================================================
+
+.. automodule:: tpRigToolkit.tools.interpolateit.core.controller
+   :members:
+   :undoc-members:
+   :show-inheritance:
