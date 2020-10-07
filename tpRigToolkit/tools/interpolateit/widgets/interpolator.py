@@ -15,7 +15,6 @@ __email__ = "tpovedatd@gmail.com"
 from Qt.QtCore import *
 from Qt.QtWidgets import *
 
-import tpDcc as tp
 from tpDcc.libs.qt.core import base
 from tpDcc.libs.qt.widgets import layouts, buttons, label, sliders, checkbox, lineedit
 
@@ -330,7 +329,7 @@ class InterpolatorWidgetController(object):
         self._model.title = value
 
     def store_items(self):
-        selection = tp.Dcc.selected_nodes(flatten=True)
+        selection = self._client.selected_nodes()
         if not selection:
             return False
 
@@ -377,42 +376,17 @@ class InterpolatorWidgetController(object):
             for attr in list(cache.keys()):
                 if cache[attr] is None:
                     continue
-                tp.Dcc.set_attribute_value(node, attr, cache[attr][value])
+                self._client.set_stored_attribute_value(node, attr, cache[attr][value])
 
-    def get_attributes(self, node):
-
-        attrs = list()
-
-        if self._model.transform_check:
-            for xform in 'trs':
-                for axis in 'xyz':
-                    channel = '{}{}'.format(xform, axis)
-                    if tp.Dcc.is_attribute_locked(node, channel):
-                        continue
-                    attrs.append(channel)
-
-        if self._model.user_attributes_check:
-            for attr in tp.Dcc.list_user_attributes(node):
-                attr_name = tp.Dcc.node_attribute_name(attr)
-                if tp.Dcc.get_attribute_type(node, attr_name) in ('double', 'int'):
-                    continue
-                if tp.Dcc.is_attribute_locked(node, attr_name):
-                    continue
-                attrs.append(attr_name)
-
-        return attrs
-
-    @tp.Dcc.undo_decorator()
     def reset_attributes(self):
         if not self._model.items:
             return
 
         for item_dict in list(self._model.items.values()):
             node = item_dict[consts.NODE_KEY]
-            attrs = self.get_attributes(node)
-            for attr in attrs:
-                default_value = tp.Dcc.attribute_default_value(node, attr)
-                tp.Dcc.set_attribute_value(node, attr, default_value)
+            attrs_data = self._client.get_attributes_data_to_store(
+                node=node, transform_attributes=True, user_attributes=True)
+            self._client.reset_attributes(node=node, attributes_dict=attrs_data)
 
     def _store(self, key, value):
         if not self._model.items:
@@ -420,10 +394,12 @@ class InterpolatorWidgetController(object):
 
         for item_dict in list(self._model.items.values()):
             node = item_dict[consts.NODE_KEY]
-            attrs = self.get_attributes(node)
             data = item_dict[key]
-            for attr in attrs:
-                data[attr] = tp.Dcc.get_attribute_value(node, attr)
+            attrs_data = self._client.get_attributes_data_to_store(
+                node=node, transform_attributes=self._model.transform_check,
+                user_attributes=self._model.user_attributes_check)
+            for attr_name, attr_value in attrs_data.items():
+                data[attr_name] = attr_value
 
         self._model.interpolate_value = value
 
@@ -449,8 +425,8 @@ class InterpolatorWidgetController(object):
                         cache_values.append((interval * index) + start_attr)
 
     def _start_slider_undo(self):
-        tp.Dcc.enable_undo()
+        self._client.enable_undo()
 
     def end_slider_undo(self):
-        tp.Dcc.disable_undo()
+        self._client.disable_undo()
         self._model.slider_down = False

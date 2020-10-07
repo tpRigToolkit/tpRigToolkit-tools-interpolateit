@@ -19,7 +19,7 @@ import tpDcc as tp
 from tpDcc.core import tool
 from tpDcc.libs.qt.widgets import toolset
 
-from tpRigToolkit.tools.jointorient.core import jointorientclient
+from tpRigToolkit.tools.interpolateit.core import interpolateitclient
 
 # Defines ID of the tool
 TOOL_ID = 'tpRigToolkit-tools-interpolateit'
@@ -63,7 +63,7 @@ class InterpolateItToolset(toolset.ToolsetWidget, object):
 
     def setup_client(self):
 
-        self._client = jointorientclient.JointOrientClient()
+        self._client = interpolateitclient.InterpolateItClient()
         self._client.signals.dccDisconnected.connect(self._on_dcc_disconnected)
 
         if not tp.is_standalone():
@@ -71,7 +71,7 @@ class InterpolateItToolset(toolset.ToolsetWidget, object):
             try:
                 mod = importlib.import_module(dcc_mod_name)
                 if hasattr(mod, 'InterpolateItServer'):
-                    server = mod.JointOrientServer(self, client=self._client, update_paths=False)
+                    server = mod.InterpolateItServer(self, client=self._client, update_paths=False)
                     self._client.set_server(server)
                     self._update_client()
             except Exception as exc:
