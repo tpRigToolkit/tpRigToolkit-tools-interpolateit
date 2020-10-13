@@ -12,6 +12,7 @@ __email__ = "tpovedatd@gmail.com"
 
 import tpDcc as tp
 from tpDcc.core import server
+from tpDcc.dccs.maya.core import constants
 
 LOGGER = tp.LogsMgr().get_logger('tpRigToolkit-tools-interpolateit')
 
@@ -43,9 +44,10 @@ class InterpolateItServer(server.DccServer, object):
 
         attributes_to_store = list()
         if transform_attributes:
-            xform_attribute_names = [tp.Dcc.TRANSLATION_ATTR_NAME, tp.Dcc.ROTATION_ATTR_NAME, tp.Dcc.SCALE_ATT_NAME]
+            xform_attribute_names = [
+                constants.TRANSLATION_ATTR_NAME, constants.ROTATION_ATTR_NAME, constants.SCALE_ATT_NAME]
             for xform in xform_attribute_names:
-                for axis in tp.Dcc.AXES:
+                for axis in constants.AXES:
                     channel = '{}{}'.format(xform, axis.upper())
                     if tp.Dcc.is_attribute_locked(node, channel):
                         continue
