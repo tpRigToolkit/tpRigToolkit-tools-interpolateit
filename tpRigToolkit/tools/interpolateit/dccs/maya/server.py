@@ -5,16 +5,13 @@
 Module that contains tpRigToolkit-tools-interpolateit server implementation for Maya
 """
 
-__author__ = "Tomas Poveda"
-__license__ = "MIT"
-__maintainer__ = "Tomas Poveda"
-__email__ = "tpovedatd@gmail.com"
+import logging
 
-import tpDcc as tp
+from tpDcc import dcc
 from tpDcc.core import server
 from tpDcc.dccs.maya.core import constants
 
-LOGGER = tp.LogsMgr().get_logger('tpRigToolkit-tools-interpolateit')
+LOGGER = logging.getLogger('tpRigToolkit-tools-interpolateit')
 
 
 class InterpolateItServer(server.DccServer, object):
@@ -49,26 +46,26 @@ class InterpolateItServer(server.DccServer, object):
             for xform in xform_attribute_names:
                 for axis in constants.AXES:
                     channel = '{}{}'.format(xform, axis.upper())
-                    if tp.Dcc.is_attribute_locked(node, channel):
+                    if dcc.is_attribute_locked(node, channel):
                         continue
                     attributes_to_store.append(channel)
 
         if user_attributes:
-            for attr in tp.Dcc.list_user_attributes(node):
-                attr_name = tp.Dcc.node_attribute_name(attr)
-                if tp.Dcc.get_attribute_type(node, attr_name) in ('double', 'int'):
+            for attr in dcc.list_user_attributes(node):
+                attr_name = dcc.node_attribute_name(attr)
+                if dcc.get_attribute_type(node, attr_name) in ('double', 'int'):
                     continue
-                if tp.Dcc.is_attribute_locked(node, attr_name):
+                if dcc.is_attribute_locked(node, attr_name):
                     continue
                 attributes_to_store.append(attr_name)
 
         for attr in attributes_to_store:
-            attributes_data[attr] = tp.Dcc.get_attribute_value(node, attr)
+            attributes_data[attr] = dcc.get_attribute_value(node, attr)
 
         reply['result'] = attributes_data
         reply['success'] = True
 
-    @tp.Dcc.undo_decorator()
+    @dcc.undo_decorator()
     def reset_attributes(self, data, reply):
         node = data['node']
         attributes_dict = data['attributes_dict']
@@ -78,8 +75,8 @@ class InterpolateItServer(server.DccServer, object):
             return
 
         for attr_name, _ in attributes_dict.items():
-            default_value = tp.Dcc.attribute_default_value(node, attr_name)
-            tp.Dcc.set_attribute_value(node, attr_name, default_value)
+            default_value = dcc.attribute_default_value(node, attr_name)
+            dcc.set_attribute_value(node, attr_name, default_value)
 
         reply['success'] = True
 
@@ -88,6 +85,6 @@ class InterpolateItServer(server.DccServer, object):
         attribute_name = data['attribute_name']
         attribute_value = data['attribute_value']
 
-        tp.Dcc.set_attribute_value(node, attribute_name, attribute_value)
+        dcc.set_attribute_value(node, attribute_name, attribute_value)
 
         reply['success'] = True

@@ -5,17 +5,15 @@
 Module that contains tpRigToolkit-tools-interpolateit server implementation for 3ds Max
 """
 
-__author__ = "Tomas Poveda"
-__license__ = "MIT"
-__maintainer__ = "Tomas Poveda"
-__email__ = "tpovedatd@gmail.com"
+import logging
 
 from pymxs import runtime as rt
 
-import tpDcc as tp
+from tpDcc import dcc
 from tpDcc.core import server
+from tpDcc.dccs.max.core import constants
 
-LOGGER = tp.LogsMgr().get_logger('tpRigToolkit-tools-interpolateit')
+LOGGER = logging.getLogger('tpRigToolkit-tools-interpolateit')
 
 
 class InterpolateItServer(server.DccServer, object):
@@ -44,18 +42,19 @@ class InterpolateItServer(server.DccServer, object):
         attributes_data = dict()
 
         if transform_attributes:
-            xform_attribute_names = [tp.Dcc.TRANSLATION_ATTR_NAME, tp.Dcc.ROTATION_ATTR_NAME, tp.Dcc.SCALE_ATTR_NAME]
+            xform_attribute_names = [
+                constants.TRANSLATION_ATTR_NAME, constants.ROTATION_ATTR_NAME, constants.SCALE_ATTR_NAME]
             for xform in xform_attribute_names:
-                xform_value = tp.Dcc.get_attribute_value(node, xform)
-                if xform == tp.Dcc.ROTATION_ATTR_NAME:
+                xform_value = dcc.get_attribute_value(node, xform)
+                if xform == constants.ROTATION_ATTR_NAME:
                     rotation_as_euler = rt.quatToEuler(xform_value)
                     xform_value = [rotation_as_euler.x, rotation_as_euler.y, rotation_as_euler.z]
                 else:
                     xform_value = list(xform_value)
-                for i, axis in enumerate(tp.Dcc.AXES):
+                for i, axis in enumerate(constants.AXES):
                     channel = '{}{}'.format(xform, axis.upper())
                     attributes_data[channel] = xform_value[i]
-                    if tp.Dcc.is_attribute_locked(node, channel):
+                    if dcc.is_attribute_locked(node, channel):
                         attributes_data[channel][i] = None
 
         if user_attributes:
@@ -64,7 +63,7 @@ class InterpolateItServer(server.DccServer, object):
         reply['result'] = attributes_data
         reply['success'] = True
 
-    @tp.Dcc.undo_decorator()
+    @dcc.undo_decorator()
     def reset_attributes(self, data, reply):
         # TODO: Add support for reset attributes
         # NOTE: In Max, we need to store extra data attribute when saving start values (store default values)
@@ -75,7 +74,7 @@ class InterpolateItServer(server.DccServer, object):
         attribute_name = data['attribute_name']
         attribute_value = data['attribute_value']
 
-        tp.Dcc.set_attribute_value(node, attribute_name, attribute_value)
-        tp.Dcc.refresh_viewport()
+        dcc.set_attribute_value(node, attribute_name, attribute_value)
+        dcc.refresh_viewport()
 
         reply['success'] = True

@@ -12,8 +12,8 @@ __license__ = "MIT"
 __maintainer__ = "Tomas Poveda"
 __email__ = "tpovedatd@gmail.com"
 
-from Qt.QtCore import *
-from Qt.QtWidgets import *
+from Qt.QtCore import Qt
+from Qt.QtWidgets import QSizePolicy, QWidget, QScrollArea
 
 from tpDcc.libs.qt.core import base
 from tpDcc.libs.qt.widgets import layouts, buttons

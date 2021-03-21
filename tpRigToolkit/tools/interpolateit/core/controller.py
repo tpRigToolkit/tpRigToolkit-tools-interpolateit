@@ -8,13 +8,14 @@ Interpolate It widget controller class implementation
 from __future__ import print_function, division, absolute_import
 
 import os
+import logging
 
-import tpDcc as tp
+from tpDcc import dcc
 from tpDcc.libs.python import jsonio
 
 from tpRigToolkit.tools.interpolateit.widgets import interpolator
 
-LOGGER = tp.LogsMgr().get_logger('tpRigToolkit-tools-interpolateit')
+LOGGER = logging.getLogger('tpRigToolkit-tools-interpolateit')
 
 
 class InterpolateItController(object):
@@ -63,7 +64,7 @@ class InterpolateItController(object):
             return False
 
         if not file_path or not os.path.isdir(file_path):
-            file_path = tp.Dcc.save_file_dialog('Save File', pattern='*.json')
+            file_path = dcc.save_file_dialog('Save File', pattern='*.json')
         if not file_path:
             return False
 
@@ -76,7 +77,7 @@ class InterpolateItController(object):
 
     def load_data(self, file_path=None):
         if not file_path or not os.path.isfile(file_path):
-            file_path = tp.Dcc.select_file_dialog('Open File', pattern='*.json')
+            file_path = dcc.select_file_dialog('Open File', pattern='*.json')
         if not file_path or not os.path.isfile(file_path):
             return False
 

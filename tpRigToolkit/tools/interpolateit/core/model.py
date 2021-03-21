@@ -7,7 +7,7 @@ Interpolate It widget model class implementation
 
 from __future__ import print_function, division, absolute_import
 
-from Qt.QtCore import *
+from Qt.QtCore import Signal, QObject
 
 
 class InterpolateItModel(QObject, object):
