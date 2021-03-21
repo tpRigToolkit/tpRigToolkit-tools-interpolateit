@@ -7,11 +7,12 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
+   tpRigToolkit.tools.interpolateit.core.client
    tpRigToolkit.tools.interpolateit.core.consts
    tpRigToolkit.tools.interpolateit.core.controller
-   tpRigToolkit.tools.interpolateit.core.interpolateit
-   tpRigToolkit.tools.interpolateit.core.interpolateitclient
    tpRigToolkit.tools.interpolateit.core.model
+   tpRigToolkit.tools.interpolateit.core.tool
+   tpRigToolkit.tools.interpolateit.core.toolset
    tpRigToolkit.tools.interpolateit.core.view
 
 Module contents

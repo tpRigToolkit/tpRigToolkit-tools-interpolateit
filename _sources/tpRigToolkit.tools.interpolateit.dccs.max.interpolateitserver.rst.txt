@@ -1,7 +1,0 @@
-tpRigToolkit.tools.interpolateit.dccs.max.interpolateitserver module
-====================================================================
-
-.. automodule:: tpRigToolkit.tools.interpolateit.dccs.max.interpolateitserver
-   :members:
-   :undoc-members:
-   :show-inheritance:

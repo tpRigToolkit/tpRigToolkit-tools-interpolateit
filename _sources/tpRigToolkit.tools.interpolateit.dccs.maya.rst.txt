@@ -7,7 +7,7 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   tpRigToolkit.tools.interpolateit.dccs.maya.interpolateitserver
+   tpRigToolkit.tools.interpolateit.dccs.maya.server
 
 Module contents
 ---------------

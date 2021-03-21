@@ -7,7 +7,7 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   tpRigToolkit.tools.interpolateit.dccs.max.interpolateitserver
+   tpRigToolkit.tools.interpolateit.dccs.max.server
 
 Module contents
 ---------------

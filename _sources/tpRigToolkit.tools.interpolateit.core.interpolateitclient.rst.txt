@@ -1,7 +1,0 @@
-tpRigToolkit.tools.interpolateit.core.interpolateitclient module
-================================================================
-
-.. automodule:: tpRigToolkit.tools.interpolateit.core.interpolateitclient
-   :members:
-   :undoc-members:
-   :show-inheritance:
